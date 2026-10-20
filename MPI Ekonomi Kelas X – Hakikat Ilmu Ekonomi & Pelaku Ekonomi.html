@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><title>MPI Ekonomi – Hakikat Ilmu Ekonomi & Pelaku Ekonomi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']]},svg:{fontCache:'global'}}</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--b1:#dff6ff;--b2:#fff3c9;--ink:#12324a;--card:#ffffffd9;--br:#1e88e5;--ac:#ff9800;--ok:#2e9d57;--no:#d93d3d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--b1:#10243a;--b2:#2a2140;--ink:#eaf4ff;--card:#1b2f48e6}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Trebuchet MS",Verdana,sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--b1),var(--b2));display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:min(100vw,177.7vh);aspect-ratio:16/9;overflow:hidden;display:flex;flex-direction:column;perspective:900px}
+@media(max-width:820px),(max-aspect-ratio:4/3){#stage{width:100vw;aspect-ratio:auto;min-height:100vh}}
+.cube{position:absolute;width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#42a5f5,#ab47bc);opacity:.45;animation:spin 9s linear infinite;box-shadow:8px 8px 0 #0002}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg) translateY(20px)}}
+#top{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;z-index:2;font-weight:700}
+#top button{font-size:18px;padding:6px 12px}
+#main{flex:1;overflow:auto;padding:8px 18px 22px;z-index:1}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:10px 18px;color:#fff;background:linear-gradient(#42a5f5,#1565c0);box-shadow:0 5px 0 #0d47a1,0 8px 14px #0003;font-weight:700;transition:.1s}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 #0d47a1}
+button.g{background:linear-gradient(#66bb6a,#2e7d32);box-shadow:0 5px 0 #1b5e20,0 8px 14px #0003}
+button.o{background:linear-gradient(#ffb74d,#f57c00);box-shadow:0 5px 0 #b45309,0 8px 14px #0003}
+button:disabled{opacity:.5;cursor:default}
+.card{background:var(--card);border-radius:20px;padding:16px 20px;margin:12px auto;max-width:980px;box-shadow:0 10px 24px #0002,inset 0 -4px 0 #0001}
+.center{text-align:center}h1,h2,h3{margin:.3em 0}
+.title{font-size:clamp(34px,8vw,92px);font-weight:900;line-height:1;margin-top:3vh;text-shadow:4px 4px 0 #0002}
+.title span{display:inline-block;animation:bob 1.6s ease-in-out infinite;background:linear-gradient(#1e88e5,#8e24aa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.title span.w{width:.3em}
+@keyframes bob{50%{transform:translateY(-12px) rotate(-3deg)}}
+#start{font-size:clamp(22px,4vw,40px);padding:16px 54px;margin-top:3vh;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{transform:scale(1.1)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:980px;margin:14px auto}
+.tile{background:var(--card);border-radius:20px;padding:18px;text-align:center;cursor:pointer;box-shadow:0 8px 0 #0002;transition:.15s;font-size:18px;font-weight:700}
+.tile:hover{transform:translateY(-6px) rotateX(8deg)}.tile i{display:block;font-style:normal;font-size:44px}
+input{width:100%;padding:12px;margin:6px 0 12px;border-radius:12px;border:2px solid var(--br);font:inherit}
+.chips,.zones{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip,.opt{background:#fff;color:#12324a;border:2px solid var(--br);border-radius:12px;padding:8px 12px;cursor:pointer;user-select:none}
+.chip.sel,.opt.sel{outline:3px solid var(--ac)}
+.zone{flex:1;min-width:150px;min-height:80px;border:3px dashed var(--br);border-radius:14px;padding:6px}
+.zone b{display:block;font-size:14px}.zone .in{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}.ord{display:flex;gap:6px;align-items:center;margin:6px 0}
+.ord button{padding:4px 10px}.opt{display:block;margin:6px 0;width:100%;text-align:left}
+.opt.right{background:#c8f5d4}.opt.wrong{background:#ffd2d2}
+.fb{margin-top:10px;padding:10px;border-radius:12px;background:#fff8dc;color:#4a3b00;display:none}
+table{border-collapse:collapse}td,th{border:1px solid var(--br);padding:6px 12px}
+.big{font-size:clamp(50px,12vw,110px);font-weight:900;color:var(--br)}
+</style></head><body>
+<div id="stage">
+<div class="cube" style="left:6%;top:18%"></div><div class="cube" style="right:8%;top:30%;animation-duration:12s;width:46px;height:46px"></div><div class="cube" style="left:12%;bottom:8%;animation-duration:7s;width:40px;height:40px"></div><div class="cube" style="right:14%;bottom:12%;animation-duration:10s"></div>
+<div id="top"><span id="ttl">📘 MPI Ekonomi · Kelas X</span><span><button class="o" id="mu" title="Musik">🔊</button></span></div>
+<div id="main"></div></div>
+<script>
+const $=s=>document.querySelector(s),app=$('#main');
+let st={n:'',k:'X',s:'SMA Mathla’ul Anwar Masohi',d:{}},ac,bg,mute=false;
+function snd(f,d=.12,t='sine',v=.07){if(mute||!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.value=v;g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}
+function music(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();if(bg)return;const n=[262,330,392,523,392,330,294,392,262,349,440,523,440,349,330,392];let i=0;bg=setInterval(()=>snd(n[i++%16],.4,'triangle',.025),340)}catch(e){}}
+$('#mu').onclick=()=>{mute=!mute;$('#mu').textContent=mute?'🔇':'🔊'};
+document.addEventListener('click',e=>{if(e.target.closest('button,.tile'))snd(760,.08,'square',.03)});
+const sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+const money=n=>'Rp'+n.toLocaleString('id-ID');
+/* ===== DATA ===== */
+const DD=[
+{q:'Kelompokkan kegiatan berikut berdasarkan pelaku ekonominya.',z:['RT Konsumen','RT Produsen','Pemerintah','Masyarakat Luar Negeri'],i:[['Keluarga Pak Ode membeli beras Rp150.000 dan membayar listrik Rp200.000',0],['CV Kopi Banda menjual 200 kg kopi @Rp80.000 = Rp16.000.000',1],['Pemda memungut pajak 2% dari omzet usaha',2],['Importir Singapura membeli 5 ton cengkih Maluku',3]],e:'Pembeli barang untuk dipakai = konsumen; penjual hasil produksi = produsen; pemungut pajak = pemerintah; pembeli dari negara lain (ekspor kita) = masyarakat luar negeri.'},
+{q:'Bu Rina mencatat arus uang keluarganya. Tempatkan ke kolom yang tepat.',z:['Pendapatan (uang masuk)','Pengeluaran (uang keluar)'],i:[['Gaji Rp5.000.000',0],['Belanja dapur Rp1.200.000',1],['Jual hasil kebun Rp800.000',0],['Bayar SPP anak Rp500.000',1]],e:'Pendapatan = Rp5.000.000 + Rp800.000 = Rp5.800.000. Pengeluaran = Rp1.700.000. Sisa (tabungan) = Rp4.100.000.'},
+{q:'Golongkan kebutuhan berikut menurut tingkat kepentingannya.',z:['Primer','Sekunder','Tersier'],i:[['Makan 3x sehari (Rp30.000/hari)',0],['Sepeda motor untuk ke sekolah',1],['Mobil sport mewah Rp1,5 miliar',2],['Pakaian untuk melindungi tubuh',0]],e:'Primer = wajib agar hidup layak; sekunder = menunjang kenyamanan; tersier = kemewahan.'}];
+const MT=[
+{q:'Jodohkan pelaku ekonomi dengan perannya.',p:[['RT Konsumen','Menggunakan barang/jasa & menyediakan faktor produksi'],['RT Produsen','Menghasilkan barang/jasa'],['Pemerintah','Membuat regulasi, memungut pajak, menyediakan barang publik'],['Masyarakat Luar Negeri','Melakukan ekspor dan impor']],e:'Setiap pelaku punya peran khusus dalam diagram circular flow.'},
+{q:'Jodohkan istilah dengan pengertiannya.',p:[['Kebutuhan','Keinginan yang harus dipenuhi demi hidup layak'],['Kelangkaan','Alat pemuas terbatas dibanding kebutuhan'],['Biaya peluang','Nilai pilihan terbaik yang dikorbankan'],['Prinsip ekonomi','Mencapai hasil maksimal dengan pengorbanan minimal']],e:'Kelangkaan memaksa manusia memilih; pilihan menimbulkan biaya peluang.'},
+{q:'Jodohkan soal numerasi dengan hasilnya.',p:[['Pendapatan Rp5.000.000 − konsumsi Rp3.500.000 = tabungan','Rp1.500.000'],['Harga Rp20.000 × 15 unit = TR','Rp300.000'],['TR Rp12 juta − TC Rp9 juta = laba','Rp3.000.000'],['Impor Rp8 miliar − ekspor Rp10 miliar = surplus','Rp2 miliar']],e:'Gunakan TR = P×Q, laba = TR − TC, tabungan = pendapatan − konsumsi.'}];
+const OR=[
+{q:'Urutkan proses lahirnya keputusan ekonomi.',i:['Kebutuhan manusia muncul','Alat pemuas terbatas (langka)','Manusia menentukan skala prioritas','Memilih dan mengambil keputusan'],e:'Kebutuhan → kelangkaan → prioritas → keputusan.'},
+{q:'Urutkan alur circular flow sederhana.',i:['Rumah tangga menyediakan tenaga kerja','Produsen membayar upah Rp3.000.000','Rumah tangga membelanjakan pendapatan','Produsen menerima uang penjualan'],e:'Faktor produksi → pendapatan → konsumsi → penerimaan produsen.'},
+{q:'Urutkan pendapatan keluarga dari TERKECIL ke TERBESAR.',i:['Keluarga B Rp1.800.000','Keluarga D Rp2.100.000','Keluarga A Rp2.500.000','Keluarga C Rp3.200.000'],e:'1.800.000 < 2.100.000 < 2.500.000 < 3.200.000.'}];
+const bars=()=>{let v=[['Jan',40],['Feb',55],['Mar',75],['Apr',50]];return`<svg viewBox="0 0 280 190" width="280"><g font-size="12" fill="#12324a">${v.map((x,i)=>`<rect x="${25+i*65}" y="${165-x[1]*1.7}" width="45" height="${x[1]*1.7}" fill="#42a5f5" rx="5"/><text x="${30+i*65}" y="${160-x[1]*1.7}">${x[1]}</text><text x="${33+i*65}" y="182">${x[0]}</text>`).join('')}</g></svg><br><small>Pengeluaran konsumsi masyarakat (juta rupiah)</small>`};
+const EV=[
+{s:'<b>Wacana.</b> Pak Laode, petani cengkih di Maluku, menjual 400 kg cengkih seharga Rp120.000/kg kepada eksportir.',q:'Total penerimaan Pak Laode adalah ...',o:['Rp4.800.000','Rp48.000.000','Rp480.000.000','Rp12.000.000','Rp52.000.000'],a:1,e:'\\(TR=P\\times Q=120.000\\times 400=48.000.000\\).'},
+{s:'<b>Tabel anggaran keluarga/bulan:</b><table><tr><th>Pos</th><th>Rp</th></tr><tr><td>Pendapatan</td><td>6.000.000</td></tr><tr><td>Makanan</td><td>2.400.000</td></tr><tr><td>Pendidikan</td><td>900.000</td></tr><tr><td>Transportasi</td><td>600.000</td></tr><tr><td>Lainnya</td><td>1.100.000</td></tr></table>',q:'Dana yang dapat ditabung adalah ...',o:['Rp500.000','Rp1.000.000','Rp1.500.000','Rp2.000.000','Rp1.100.000'],a:1,e:'Pengeluaran = 2.400.000+900.000+600.000+1.100.000 = 5.000.000. Tabungan = 6.000.000 − 5.000.000 = Rp1.000.000.'},
+{s:'<b>Grafik:</b><br>'+bars(),q:'Konsumsi tertinggi terjadi pada bulan ... dengan kenaikan dari bulan sebelumnya sebesar ...',o:['Feb, 15 juta','Mar, 20 juta','Mar, 35 juta','Apr, 10 juta','Jan, 40 juta'],a:1,e:'Puncak = Maret (75 juta). Kenaikan = 75 − 55 = 20 juta.'},
+{s:'<b>Wacana.</b> Pemerintah Kota Ambon membangun pasar, memungut pajak daerah, dan memberi subsidi pupuk kepada petani.',q:'Peran pemerintah yang tergambar adalah ...',o:['Hanya sebagai konsumen barang impor','Menyediakan barang publik, memungut pajak, dan memberi subsidi','Menyewakan tenaga kerja kepada produsen','Hanya menjual barang ke luar negeri','Menentukan semua harga tanpa pajak'],a:1,e:'Pemerintah berperan sebagai penyedia barang publik, pemungut pajak, dan pengatur/penstabil ekonomi.'},
+{s:'<b>Konsep.</b> Keinginan manusia tidak ada habisnya, sedangkan sumber daya terbatas.',q:'Masalah pokok ekonomi muncul karena ...',o:['Harga barang selalu naik','Uang beredar terlalu sedikit','Kebutuhan tak terbatas sedangkan alat pemuas terbatas','Pemerintah memungut pajak','Produsen terlalu banyak'],a:2,e:'Inilah hakikat ilmu ekonomi: memilih karena kelangkaan.'}];
+const BS=[
+{q:'Rumah tangga konsumen juga berperan menyediakan faktor produksi bagi produsen.',a:true,e:'Benar. RT menyediakan tenaga kerja, tanah, modal, keahlian dan menerima upah, sewa, bunga, laba.'},
+{q:'Pada rumus \\(Y=C+I+G+(X-M)\\), impor (M) menambah pendapatan nasional.',a:false,e:'Salah. Impor mengurangi (X − M); ekspor yang menambah.'},
+{q:'Jika TR Rp9 juta dan TC Rp10 juta, usaha untung Rp1 juta.',a:false,e:'Salah. Laba = 9 − 10 = −1 juta, artinya rugi Rp1 juta.'}];
+const TOTAL=DD.length+MT.length+OR.length+EV.length+BS.length;
+/* ===== SCREENS ===== */
+const back='<div class="center"><button class="g" onclick="go(\'menu\')">🗺 Kembali ke menu</button></div>';
+const S={
+cover:()=>`<div class="center"><div class="title">${[...'EKONOMI'].map((c,i)=>`<span style="animation-delay:${i*.12}s">${c}</span>`).join('')}<br>${[...'ITU ASYIK!'].map((c,i)=>c==' '?'<span class="w"></span>':`<span style="animation-delay:${i*.12}s">${c}</span>`).join('')}</div><h2>Hakikat Ilmu Ekonomi &amp; Pelaku Ekonomi</h2><p>Media Pembelajaran Interaktif · Kelas X Fase E</p><button id="start" class="g" onclick="music();go('form')">▶ MULAI</button></div>`,
+form:()=>`<div class="card" style="max-width:560px"><h2>🧑‍🎓 Identitas Peserta Didik</h2><label>Nama Lengkap</label><input id="fn" value="${st.n}" placeholder="Nama lengkap"><label>Kelas</label><input id="fk" value="${st.k}"><label>Sekolah</label><input id="fs" value="${st.s}"><div class="center"><button onclick="saveId()">Lanjut ➜</button></div></div>`,
+menu:()=>`<div class="center"><h2>Halo, ${st.n}! 👋 Pilih menu</h2></div><div class="grid">${[['🎯','Tujuan Pembelajaran','tujuan'],['📖','Materi','materi'],['🧩','Tantangan Interaktif','tantangan'],['📝','Evaluasi','evaluasi'],['🏆','Skor & Sertifikat','hasil'],['👩‍🏫','Pengembang','dev']].map(m=>`<div class="tile" onclick="go('${m[2]}')"><i>${m[0]}</i>${m[1]}</div>`).join('')}</div>`,
+tujuan:()=>`<div class="card"><h2>🎯 Tujuan Pembelajaran</h2><p>Menelaah hakikat ilmu ekonomi sebagai ilmu yang mempelajari upaya manusia dalam memenuhi kebutuhan hidup.</p><h3>Indikator Pencapaian</h3><p>Mengidentifikasi peran rumah tangga konsumen, produsen, pemerintah, dan masyarakat luar negeri.</p></div>${back}`,
+materi:()=>`<div class="card"><h2>📖 1. Hakikat Ilmu Ekonomi</h2><p>Ilmu ekonomi mempelajari <b>upaya manusia memenuhi kebutuhan hidup</b> dengan alat pemuas yang terbatas. Karena kebutuhan tak terbatas dan sumber daya langka, manusia harus <b>memilih</b> (skala prioritas) dan menanggung <b>biaya peluang</b>.</p><p>Prinsip ekonomi: hasil maksimal dengan pengorbanan minimal.</p></div>
+<div class="card"><h2>🧮 2. Rumus Penting</h2><p>Penerimaan: \\(TR=P\\times Q\\)</p><p>Laba: \\(\\pi=TR-TC\\)</p><p>Tabungan: \\(S=Y-C\\)</p><p>Pendapatan nasional: \\(Y=C+I+G+(X-M)\\)</p></div>
+<div class="card"><h2>🔄 3. Pelaku Ekonomi</h2><p>🏠 <b>RT Konsumen</b>: memakai barang/jasa; menyediakan faktor produksi (tenaga kerja, tanah, modal).</p><p>🏭 <b>RT Produsen</b>: menghasilkan barang/jasa, membayar upah, sewa, bunga.</p><p>🏛 <b>Pemerintah</b>: membuat regulasi, memungut pajak, menyediakan barang publik, subsidi.</p><p>🌏 <b>Masyarakat Luar Negeri</b>: ekspor &amp; impor, investasi asing.</p><p><b>Alur:</b> RT → faktor produksi → Produsen → upah → RT → belanja → Produsen. Pemerintah &amp; luar negeri terhubung lewat pajak, subsidi, ekspor-impor.</p></div>${back}`,
+tantangan:()=>`<div class="center"><h2>🧩 Tantangan Interaktif</h2><small>Drag &amp; drop, atau ketuk item lalu ketuk tujuannya.</small></div><div id="qs"></div>${back}`,
+evaluasi:()=>`<div class="center"><h2>📝 Evaluasi</h2><small>Ketuk jawaban; kunci dan pembahasan langsung muncul.</small></div><div id="qs"></div>${back}`,
+hasil:()=>{const r=sc();return`<div class="card center"><h2>🏆 Skor Akhir</h2><div class="big">${r.p}</div><p>${st.n} · benar ${r.c} dari ${TOTAL} soal (terjawab ${r.a})</p><button class="o" onclick="cert()">⬇ Unduh Sertifikat (PDF)</button> <button class="g" onclick="go('menu')">🗺 Kembali ke menu</button><p id="msg"></p></div>`},
+dev:()=>`<div class="card"><h2>👩‍🏫 Pengembang</h2><p><b>Ratna Dewi Salasa, SE</b><br>Guru Mata Pelajaran Ekonomi<br>SMA Mathla’ul Anwar Masohi</p><p>Media Pembelajaran Interaktif Ekonomi · Kelas X · Fase E (Kurikulum Merdeka)</p></div>${back}`};
+function sc(){const v=Object.values(st.d),c=v.reduce((a,b)=>a+b,0);return{c,a:v.length,p:Math.round(c/TOTAL*100)}}
+function saveId(){const n=$('#fn').value.trim();if(!n){alert('Isi nama lengkap dulu ya 🙂');return}st.n=n;st.k=$('#fk').value.trim();st.s=$('#fs').value.trim();go('menu')}
+function go(s){app.innerHTML=S[s]();app.scrollTop=0;$('#ttl').textContent=s=='cover'?'📘 MPI Ekonomi · Kelas X':'📘 '+s.toUpperCase();if(s=='tantangan')buildCh();if(s=='evaluasi')buildEv();tex()}
+function tex(){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([app]).catch(()=>{});else setTimeout(()=>window.MathJax&&MathJax.typesetPromise&&MathJax.typesetPromise([app]),1500)}
+function done(card,id,good,key){if(st.d[id]===undefined)st.d[id]=good?1:0;const f=card.querySelector('.fb');f.style.display='block';f.innerHTML=`<b>${good?'✅ Benar!':'❌ Belum tepat.'}</b><br>${key}`;card.querySelectorAll('.chk').forEach(b=>b.disabled=true);snd(good?880:220,.25,good?'sine':'sawtooth',.06);tex()}
+function mk(h){const d=document.createElement('div');d.className='card';d.innerHTML=h+'<div class="fb"></div>';$('#qs').appendChild(d);return d}
+function buildCh(){
+DD.forEach((d,k)=>{const c=mk(`<h3>Drag &amp; Drop ${k+1}</h3><p>${d.q}</p><div class="chips" data-pool></div><div class="zones">${d.z.map(z=>`<div class="zone"><b>${z}</b><div class="in"></div></div>`).join('')}</div><button class="chk">Periksa</button>`);let sel=null;const pool=c.querySelector('.chips');
+sh(d.i).forEach(it=>{const e=document.createElement('div');e.className='chip';e.textContent=it[0];e.dataset.z=it[1];e.draggable=true;e.ondragstart=ev=>{sel=e;ev.dataTransfer.setData('t','x')};e.onclick=ev=>{ev.stopPropagation();c.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel'));sel=e;e.classList.add('sel')};pool.appendChild(e)});
+const put=z=>{if(!sel)return;z.querySelector('.in').appendChild(sel);sel.classList.remove('sel');sel=null};
+c.querySelectorAll('.zone').forEach(z=>{z.ondragover=e=>e.preventDefault();z.ondrop=e=>{e.preventDefault();put(z)};z.onclick=()=>put(z)});
+c.querySelector('.chk').onclick=()=>{const zs=[...c.querySelectorAll('.zone')];let g=!pool.children.length;zs.forEach((z,i)=>z.querySelectorAll('.chip').forEach(ch=>{if(+ch.dataset.z!==i)g=false}));done(c,'d'+k,g,'<b>Kunci:</b> '+d.i.map(x=>x[0]+' → '+d.z[x[1]]).join('; ')+'<br><b>Pembahasan:</b> '+d.e)}});
+MT.forEach((d,k)=>{const c=mk(`<h3>Menjodohkan ${k+1}</h3><p>${d.q}</p><div class="cols"><div class="L"></div><div class="R"></div></div><button class="chk">Periksa</button>`);const L=c.querySelector('.L'),R=c.querySelector('.R'),col=['#bbdefb','#c8e6c9','#ffe0b2','#e1bee7'];let a=null,pr={};
+const paint=()=>{c.querySelectorAll('.opt').forEach(o=>{o.style.background='';o.classList.remove('sel')});for(const l in pr){c.querySelector(`.L [data-i="${l}"]`).style.background=col[l];c.querySelector(`.R [data-i="${pr[l]}"]`).style.background=col[l]}if(a!==null)c.querySelector(`.L [data-i="${a}"]`).classList.add('sel')};
+d.p.forEach((p,i)=>{const e=document.createElement('button');e.className='opt';e.dataset.i=i;e.textContent=p[0];e.onclick=()=>{a=i;delete pr[i];paint()};L.appendChild(e)});
+d.p.map((p,i)=>i).reverse().forEach(i=>{const e=document.createElement('button');e.className='opt';e.dataset.i=i;e.textContent=d.p[i][1];e.onclick=()=>{if(a===null)return;for(const l in pr)if(pr[l]==i)delete pr[l];pr[a]=i;a=null;paint()};R.appendChild(e)});
+c.querySelector('.chk').onclick=()=>{const g=d.p.every((p,i)=>pr[i]==i);done(c,'m'+k,g,'<b>Kunci:</b> '+d.p.map(p=>p[0]+' ⇄ '+p[1]).join('<br>')+'<br><b>Pembahasan:</b> '+d.e)}});
+OR.forEach((d,k)=>{const c=mk(`<h3>Mengurutkan ${k+1}</h3><p>${d.q}</p><div class="O"></div><button class="chk">Periksa</button>`);let o=d.i.map((x,i)=>i);o=o.slice(2).concat(o.slice(0,2));const O=c.querySelector('.O');
+const draw=()=>{O.innerHTML='';o.forEach((v,p)=>{const r=document.createElement('div');r.className='ord';r.innerHTML=`<button>▲</button><button>▼</button><span class="chip" style="flex:1">${d.i[v]}</span>`;const[b1,b2]=r.querySelectorAll('button');b1.onclick=()=>{if(p>0){[o[p],o[p-1]]=[o[p-1],o[p]];draw()}};b2.onclick=()=>{if(p<o.length-1){[o[p],o[p+1]]=[o[p+1],o[p]];draw()}};O.appendChild(r)})};draw();
+c.querySelector('.chk').onclick=()=>{done(c,'o'+k,o.every((v,i)=>v==i),'<b>Kunci:</b> '+d.i.map((x,i)=>(i+1)+'. '+x).join('<br>')+'<br><b>Pembahasan:</b> '+d.e)}})}
+function buildEv(){
+EV.forEach((d,k)=>{const c=mk(`<h3>Pilihan Ganda ${k+1}</h3><div>${d.s}</div><p><b>${d.q}</b></p>${d.o.map((t,i)=>`<button class="opt" data-i="${i}">${'ABCDE'[i]}. ${t}</button>`).join('')}`);
+c.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(st.d['p'+k]!==undefined)return;const i=+b.dataset.i;c.querySelectorAll('.opt')[d.a].classList.add('right');if(i!==d.a)b.classList.add('wrong');done(c,'p'+k,i===d.a,`<b>Kunci:</b> ${'ABCDE'[d.a]}. ${d.o[d.a]}<br><b>Pembahasan:</b> ${d.e}`)})});
+BS.forEach((d,k)=>{const c=mk(`<h3>Benar / Salah ${k+1}</h3><p><b>${d.q}</b></p><button class="opt" data-v="1">✔ Benar</button><button class="opt" data-v="0">✖ Salah</button>`);
+c.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(st.d['b'+k]!==undefined)return;const v=b.dataset.v==='1';c.querySelector(`[data-v="${d.a?1:0}"]`).classList.add('right');if(v!==d.a)b.classList.add('wrong');done(c,'b'+k,v===d.a,`<b>Kunci:</b> ${d.a?'Benar':'Salah'}<br><b>Pembahasan:</b> ${d.e}`)})})}
+async function cert(){const m=$('#msg'),r=sc();try{const{jsPDF}=window.jspdf,p=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+p.setFillColor(255,248,225);p.rect(0,0,297,210,'F');p.setDrawColor(30,136,229);p.setLineWidth(3);p.rect(8,8,281,194);p.setDrawColor(255,152,0);p.setLineWidth(1);p.rect(14,14,269,182);
+p.setTextColor(21,101,192);p.setFont('helvetica','bold');p.setFontSize(38);p.text('SERTIFIKAT',148.5,46,{align:'center'});
+p.setFontSize(14);p.setTextColor(80,80,80);p.setFont('helvetica','normal');p.text('Diberikan kepada:',148.5,66,{align:'center'});
+p.setFont('helvetica','bold');p.setFontSize(32);p.setTextColor(142,36,170);p.text(st.n,148.5,88,{align:'center'});p.setDrawColor(142,36,170);p.line(60,93,237,93);
+p.setFont('helvetica','normal');p.setFontSize(14);p.setTextColor(40,40,40);p.text(`Kelas ${st.k} · ${st.s}`,148.5,104,{align:'center'});
+p.text('telah menyelesaikan Media Pembelajaran Interaktif Ekonomi',148.5,120,{align:'center'});p.text('Hakikat Ilmu Ekonomi & Peran Pelaku Ekonomi (Kelas X, Fase E)',148.5,128,{align:'center'});
+p.setFont('helvetica','bold');p.setFontSize(30);p.setTextColor(46,157,87);p.text('Skor Akhir: '+r.p+' / 100',148.5,150,{align:'center'});
+p.setFont('helvetica','normal');p.setFontSize(12);p.setTextColor(40,40,40);p.text(new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}),230,168,{align:'center'});p.text('Guru Mata Pelajaran Ekonomi',230,175,{align:'center'});p.setFont('helvetica','bold');p.text('Ratna Dewi Salasa, SE',230,192,{align:'center'});
+const dl=await claude.use('downloads');const blob=p.output('blob');if(dl){await dl.save({filename:'Sertifikat-'+st.n.replace(/\W+/g,'_')+'.pdf',data:blob});m.textContent='Sertifikat siap disimpan ✔'}else m.textContent='Unduhan tidak tersedia di tampilan ini.'}catch(e){m.textContent='Unduhan dibatalkan atau gagal: '+(e.message||e.code||'')}}
+go('cover');
+</script></body></html>
